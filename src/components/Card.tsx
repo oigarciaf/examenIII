@@ -9,6 +9,20 @@ function Card(props: ICard  & {statusOptions: string[]} ) {
         setStatus(e.target.value)
         props.changeStatus(props.task.id, e.target.value)
     }
+
+    // Calculate remaining days until task end date
+    const enddate = props.task.enddate ? new Date(props.task.enddate) : undefined;
+    const remainingDays = enddate ? Math.ceil((enddate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : undefined;
+    // Determine if task is overdue or needs a reminder
+   
+    let message = '';
+    if (remainingDays !== undefined) {
+        if (remainingDays < 0) {
+            message = '¡Tiempo vencido!';
+        } else if (remainingDays === 1 && props.task.status === 'TODO') {
+            message = '¡Recuerda completar esta tarea mañana!';
+        }
+    }
     
     return (
 
@@ -44,7 +58,12 @@ function Card(props: ICard  & {statusOptions: string[]} ) {
                         ))}
                     </select>
                 </p>
+                
             </div>
+            {message && <div className="card-item">
+                <span>Recordatorio:</span>
+                <p>{message}</p>
+            </div>}
             <button className="delete-btn" onClick={() => props.deleteTask(props.task.id)} >x</button>
         </div>
 
