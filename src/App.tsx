@@ -1,32 +1,41 @@
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import { ITask } from './interfaces/ITask' 
+import { ITask } from './interfaces/ITask'
 
 import TaskForm from './components/TaskForm'
 import Panel from './components/Panel'
-
+import AddPanel from './components/AddPanel';
 
 function App() {
 
   const [id, setId] = useState<number>(0)
-  const [task, setTask] = useState<ITask>({ "status" : "TODO", "id": 0 })
+  const [task, setTask] = useState<ITask>({ "status": "TODO", "id": 0 })
   const [taskList, setTaskList] = useState<ITask[]>([])
   const [teams, setTeams] = useState<string[]>(["Development", "QA", "PMs", "BI"])
+  const [panels, setPanels] = useState<string[]>(['Tareas en progreso', 'Tareas Completadas']);
+  const statusOptions: string[] = ["TODO", ...panels];
+  /**#######################33   */
+  const handleAddPanel = (title: string) => {
+    setPanels([...panels, title]);
+    setTask({ ...task, status: title });
+  }
+  /**#######################  */
   
+  /**#######################  */
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTask({...task, [e.target.name]: e.target.value})
+    setTask({ ...task, [e.target.name]: e.target.value })
   }
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTask({...task, [e.target.name]: e.target.value})
+    setTask({ ...task, [e.target.name]: e.target.value })
   }
 
   const changeStatus = (id: number, status: string) => {
-    const newTaskList = taskList.map( task => {
-      if(task.id === id) {
+    const newTaskList = taskList.map((task) => {
+      if (task.id === id) {
         task.status = status
       }
       return task
@@ -35,61 +44,76 @@ function App() {
   }
 
   const deleteTask = (id: number) => {
-    const newTaskList = taskList.filter( task => task.id !== id )
+    const newTaskList = taskList.filter(task => task.id !== id)
     setTaskList(newTaskList)
   }
 
-  const addTask = () => {   
-    
+  const addTask = () => {
+
     setTaskList([...taskList, task])
     const newId: number = id + 1
     setId(newId)
 
-    setTask({ 
-      "id" : newId
-      , "status" : "TODO" 
-      , "name" : "" 
-      , "team" : "" 
-      , "hours" : 0 
+    setTask({
+      "id": newId
+      , "status": "TODO"
+      , "name": ""
+      , "team": ""
+      , "hours": 0
     })
   }
+/**Eliminar panel */
+  /**##################################### */
 
+    const removePanel = (title: string) => {
+    const newPanels = panels.filter((panelTitle) => panelTitle !== title);
+    setPanels(newPanels);
+  };
+  /**##################################### */
+ 
+
+          
   return (
     <div className="App">
 
       <header>
-          <h1>TODO List</h1>
+        <h1>TODO List</h1>
       </header>
-     
 
       <div className="container">
-      <div className=''>
         
-      </div>
-        <div>
-        <TaskForm 
-            task={task} 
-            teams={teams} 
-            onChangeInput={handleInputChange}
-            onChangeSelect={handleSelectChange}
-            onSave={addTask}             
+      <AddPanel addPanel={handleAddPanel} panels={panels || []} />
+
+        <TaskForm
+          task={task}
+          teams={teams}
+          onChangeInput={handleInputChange}
+          onChangeSelect={handleSelectChange}
+          onSave={addTask}
         />
-        </div>
-        <TaskForm 
-            task={task} 
-            teams={teams} 
-            onChangeInput={handleInputChange}
-            onChangeSelect={handleSelectChange}
-            onSave={addTask}             
-        />
-        <div className="columnas">
-          <Panel 
-            title={"TODO"} 
-            tasks={ taskList.filter( task => task.status === 'TODO' ) }
+
+        <div className="columnas">  
+        <Panel
+            title={"TODO"}
+            statusOptions={statusOptions}
+            tasks={taskList.filter(task => task.status === 'TODO')}
             changeStatus={changeStatus}
             deleteTask={deleteTask}
+            showRemoveButton={false}
+            removePanel={removePanel} 
           />
-          
+          {panels.map((panelTitle) => (
+        <Panel
+          key={panelTitle}
+          statusOptions={statusOptions}
+          title={panelTitle}
+          tasks={taskList.filter(task => task.status === panelTitle)}
+          changeStatus={changeStatus}
+          deleteTask={deleteTask}
+          showRemoveButton={true} 
+          removePanel={removePanel}
+          />
+      ))}
         </div>
       </div>
     </div>
@@ -97,3 +121,4 @@ function App() {
 }
 
 export default App;
+

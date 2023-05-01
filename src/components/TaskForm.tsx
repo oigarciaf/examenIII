@@ -4,7 +4,7 @@ import { ITask, ITaskFormProps } from '../interfaces/ITask'
 function TaskForm(props: ITaskFormProps) {
 
     const [errores, setErrores] = useState<string[]>([])
-
+    
     const validateForm = () => {
         
         let newError: string[] = [];
@@ -43,12 +43,14 @@ function TaskForm(props: ITaskFormProps) {
         
     }
   
-    return (   
-        <div>    
-            <h1> Agregar Nueva Tarea </h1> 
+    return (     
+        <div>
+            <h2>Agregar una nueva tarea </h2>
+        
         <form>
-        <button type="button"  >Eliminar</button>
+             
             <table>
+            
                 <tr>
                     <td> <label htmlFor="taskName">Tarea</label> </td>
                     <td> <input type="text" onChange={props.onChangeInput} name="name" placeholder='Tarea' value={props.task.name} /> </td>
@@ -125,9 +127,11 @@ function TaskForm(props: ITaskFormProps) {
                 </tr>            
 
             </table>        
-        </form>    </div>     
+        </form>     
+        </div>     
     );
 
 }
 
 export default TaskForm;
+

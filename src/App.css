@@ -79,7 +79,31 @@ button[type="button"] {
     color: #fff;
     transition: background-color 0.2s ease;
 }
+button[type="submit"] {    
+    border: none;    
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    background-color: #3897f0;
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
 
+.remove {
+    border: none;    
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    background-color: #ee1818;
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
 button[type="button"]:hover {
     background-color: #1c87e9;
 }

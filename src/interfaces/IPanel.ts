@@ -5,4 +5,9 @@ export interface IPanelProps {
     tasks: ITask[];
     changeStatus: (id: number, status: string) => void;
     deleteTask: (id: number) => void;
+    removePanel: (title: string) => void;
+    showRemoveButton?: boolean;
+    statusOptions: string[]
 }
+
+
