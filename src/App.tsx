@@ -3,11 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 
 import { ITask } from './interfaces/ITask'
-import { Props } from './interfaces/IFilter'
+import { IFilterProps } from './interfaces/IFilter'
 import TaskForm from './components/TaskForm'
 import Panel from './components/Panel'
 import AddPanel from './components/AddPanel';
 import Filter from './components/Filter';
+
+
 
 function App() {
 
@@ -18,6 +20,7 @@ function App() {
   const [panels, setPanels] = useState<string[]>(['Tareas en progreso', 'Tareas Completadas']);
   const [filter, setFilter] = useState<string>("");
   const statusOptions: string[] = ["TODO", ...panels];
+  const [isPanelOccupied, setIsPanelOccupied] = useState<boolean>(false);
 
   /**#######################33   */
   const handleAddPanel = (title: string) => {
@@ -65,8 +68,9 @@ function App() {
       , "hours": 0
     })
   }
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
+    setIsPanelOccupied(filteredTasks.length > 0);
   };
 /**Eliminar panel */
   /**##################################### */
@@ -113,6 +117,7 @@ function App() {
   deleteTask={deleteTask}
   showRemoveButton={false}
   removePanel={removePanel}
+  isPanelOccupied={isPanelOccupied}
 />
 {panels.map((panelTitle) => (
   <Panel
@@ -124,6 +129,7 @@ function App() {
     deleteTask={deleteTask}
     showRemoveButton={true}
     removePanel={removePanel}
+    isPanelOccupied={isPanelOccupied}
   />
 ))}
 
@@ -142,6 +148,3 @@ function App() {
 }
 
 export default App;
-
-
-  
