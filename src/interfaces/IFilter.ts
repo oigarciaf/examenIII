@@ -1,7 +1,8 @@
 import { ITask } from "./ITask";
 import React from "react";
 
-export interface Props {
+export interface IFilterProps {
     filter: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+
   }
