@@ -3,10 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 
 import { ITask } from './interfaces/ITask'
-
+import { IFilterProps } from './interfaces/IFilter'
 import TaskForm from './components/TaskForm'
 import Panel from './components/Panel'
 import AddPanel from './components/AddPanel';
+import Filter from './components/Filter';
+
+
 
 function App() {
 
@@ -15,7 +18,10 @@ function App() {
   const [taskList, setTaskList] = useState<ITask[]>([])
   const [teams, setTeams] = useState<string[]>(["Development", "QA", "PMs", "BI"])
   const [panels, setPanels] = useState<string[]>(['Tareas en progreso', 'Tareas Completadas']);
+  const [filter, setFilter] = useState<string>("");
   const statusOptions: string[] = ["TODO", ...panels];
+  const [isPanelOccupied, setIsPanelOccupied] = useState<boolean>(false);
+
   /**#######################33   */
   const handleAddPanel = (title: string) => {
     setPanels([...panels, title]);
@@ -62,6 +68,10 @@ function App() {
       , "hours": 0
     })
   }
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilter(e.target.value);
+    setIsPanelOccupied(filteredTasks.length > 0);
+  };
 /**Eliminar panel */
   /**##################################### */
 
@@ -71,6 +81,11 @@ function App() {
   };
   /**##################################### */
  
+  const filteredTasks = taskList.filter(
+    (task) =>
+      task.name?.toLowerCase().includes(filter.toLowerCase()) ||
+      task.team?.toLowerCase().includes(filter.toLowerCase())
+  );
 
           
   return (
@@ -93,32 +108,43 @@ function App() {
         />
 
         <div className="columnas">  
+        
         <Panel
-            title={"TODO"}
-            statusOptions={statusOptions}
-            tasks={taskList.filter(task => task.status === 'TODO')}
-            changeStatus={changeStatus}
-            deleteTask={deleteTask}
-            showRemoveButton={false}
-            removePanel={removePanel} 
-          />
-          {panels.map((panelTitle) => (
-        <Panel
-          key={panelTitle}
-          statusOptions={statusOptions}
-          title={panelTitle}
-          tasks={taskList.filter(task => task.status === panelTitle)}
-          changeStatus={changeStatus}
-          deleteTask={deleteTask}
-          showRemoveButton={true} 
-          removePanel={removePanel}
-          />
-      ))}
-        </div>
+  title={"TODO"}
+  statusOptions={statusOptions}
+  tasks={filteredTasks.filter((task) => task.status === "TODO")}
+  changeStatus={changeStatus}
+  deleteTask={deleteTask}
+  showRemoveButton={false}
+  removePanel={removePanel}
+  isPanelOccupied={isPanelOccupied}
+/>
+{panels.map((panelTitle) => (
+  <Panel
+    key={panelTitle}
+    statusOptions={statusOptions}
+    title={panelTitle}
+    tasks={filteredTasks.filter((task) => task.status === panelTitle)}
+    changeStatus={changeStatus}
+    deleteTask={deleteTask}
+    showRemoveButton={true}
+    removePanel={removePanel}
+    isPanelOccupied={isPanelOccupied}
+  />
+))}
+
+      <div>
+
+        
       </div>
+        </div>
+        
+      </div>
+      <div className="columnas">
+        <Filter filter={filter} onChange={handleFilterChange} />
+        </div>
     </div>
   );
 }
 
 export default App;
-
