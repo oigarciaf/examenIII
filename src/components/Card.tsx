@@ -35,6 +35,10 @@ function Card(props: ICard  & {statusOptions: string[]} ) {
                 <span>Tarea:</span>
                 <p>{props.task.name}</p>
             </div>
+        <div className="card-item">
+                <span>Team:</span>
+                <p>{props.task.team}</p>
+            </div>
             <div className="card-item">
                 <span>Fecha Inicio:</span>
                 <p>{props.task.startdate ? new Date(props.task.startdate).toISOString().substr(0, 10).split('T')[0] : ''}</p>
