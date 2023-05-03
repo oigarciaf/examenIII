@@ -28,6 +28,19 @@ form {
     margin: 5px;
     padding: 20px;
 }
+.add {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #333333;
+    color: #fff;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 20px;
+}
 
 table {
     width: 100%;
@@ -197,6 +210,14 @@ header h1 {
   text-align: center;
   padding: 20px;
 }
+h2 {
+    font-size: 2rem;
+    margin: 0 auto;
+    max-width: 500px;
+    text-align: center;
+
+}
+
 
 .card {
   

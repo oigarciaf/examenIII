@@ -18,7 +18,7 @@ function Card(props: ICard  & {statusOptions: string[]} ) {
     let message = '';
     if (remainingDays !== undefined) {
         if (remainingDays < 0) {
-            message = '¡Tiempo vencido!';
+            message = '¡Tarea expirada!';
         } else if (remainingDays === 1 && props.task.status === 'TODO') {
             message = '¡Recuerda completar esta tarea mañana!';
         }
@@ -34,6 +34,10 @@ function Card(props: ICard  & {statusOptions: string[]} ) {
             <div className="card-item">
                 <span>Tarea:</span>
                 <p>{props.task.name}</p>
+            </div>
+            <div className="card-item">
+                <span>Team:</span>
+                <p>{props.task.team}</p>
             </div>
             <div className="card-item">
                 <span>Fecha Inicio:</span>

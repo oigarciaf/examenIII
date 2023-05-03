@@ -59,7 +59,7 @@ function TaskForm(props: ITaskFormProps) {
                     <td><label>Equipo:</label></td>
                     <td>
                         <select id="equipo" name="team" value={props.task.team} onChange={props.onChangeSelect} >
-                            <option value="">Seleccione un equipo</option>
+                            <option value="">Equipo</option>
                             {props.teams.map((team) => {
                                 return <option key={team} value={team} >{team} </option>
                             })}

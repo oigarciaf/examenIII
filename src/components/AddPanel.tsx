@@ -27,7 +27,7 @@ function AddPanel(props:AddPanelProps) {
   return (
     <div>
       <h2>Agregar nuevo Panel</h2>
-      <form onSubmit={handleSubmit}>
+      <form className='add' onSubmit={handleSubmit}>
         <label htmlFor="newpanel">Panel:</label>
         <input
           type="text"
