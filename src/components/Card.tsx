@@ -10,11 +10,9 @@ function Card(props: ICard  & {statusOptions: string[]} ) {
         props.changeStatus(props.task.id, e.target.value)
     }
 
-    // Calculate remaining days until task end date
     const enddate = props.task.enddate ? new Date(props.task.enddate) : undefined;
     const remainingDays = enddate ? Math.ceil((enddate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : undefined;
-    // Determine if task is overdue or needs a reminder
-   
+
     let message = '';
     if (remainingDays !== undefined) {
         if (remainingDays < 0) {
